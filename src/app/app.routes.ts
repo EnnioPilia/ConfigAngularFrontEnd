@@ -5,7 +5,7 @@ import { VerifyComponent } from './pages/auth/verify/verify.component'
 import { DashboardComponent } from './pages/dashboard/dashboard/dashboard.component';
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
-import { HomeComponent } from './pages/home/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 // import { authGuard } from './core/guards/auth.guard'; et ca dan le path  "  canActivate: [authGuard]  "
 
 export const routes: Routes = [
