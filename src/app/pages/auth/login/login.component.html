@@ -29,5 +29,9 @@
     <div class="forgot-password">
     <a [routerLink]="['/forgot-password']">Mot de passe oublié ?</a>
   </div>
-
+    <app-shared-button
+    type="button"
+    label="Retour à l'accueil"
+    (click)="goToHome()"
+  ></app-shared-button>
 </form>

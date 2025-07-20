@@ -61,7 +61,7 @@ export class ForgotPasswordComponent implements OnInit {
 goToLogin(): void {
   this.router.navigate(['/login']);
 }
-goToHome(): void {
+  goToHome(): void {
   this.router.navigate(['/home']); // ou '/' selon ta route d'accueil
 }
 }

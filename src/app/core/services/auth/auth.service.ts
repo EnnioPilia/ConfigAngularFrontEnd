@@ -29,7 +29,7 @@ export class AuthService {
   private readonly baseUrl = environment.apiUrl.replace(/\/+$/, '') + '/auth';
   private currentUser: Users | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(credentials: { email: string; password: string }): Observable<{ message: string; token: string }> {
     return this.http.post<{ message: string; token: string }>(`${this.baseUrl}/login`, credentials, {
@@ -58,16 +58,14 @@ export class AuthService {
     return this.http.post<string>(`${this.baseUrl}/reset-password`, data);
   }
 
-  // --- Ajout méthode register ---
   register(data: RegisterRequest): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}/register`, data).pipe(
+    return this.http.post(`${this.baseUrl}/register`, data, { responseType: 'text' }).pipe(
       catchError(err => {
         return throwError(() => new Error(err?.error?.error || "Erreur lors de l'inscription."));
       })
     );
   }
 
-  // --- Ajout méthode verifyEmail ---
   verifyEmail(token: string): Observable<string> {
     return this.http.get<string>(`${this.baseUrl}/verify`, { params: { token } }).pipe(
       catchError(err => {

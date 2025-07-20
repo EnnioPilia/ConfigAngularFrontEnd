@@ -30,13 +30,16 @@
     [loading]="loading"
     label="Créer un compte"
   ></app-shared-button>
-
-  <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
+  
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
 
   <div class="login-link">
     <a [routerLink]="['/login']">Se connecter</a>
   </div>
-
+    <app-shared-button
+    type="button"
+    label="Retour à l'accueil"
+    (click)="goToHome()"
+  ></app-shared-button>
 </form>

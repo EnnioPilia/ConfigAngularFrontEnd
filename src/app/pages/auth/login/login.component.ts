@@ -68,4 +68,7 @@ export class LoginComponent {
       }
     });
   }
+    goToHome(): void {
+  this.router.navigate(['/home']); // ou '/' selon ta route d'accueil
+}
 }

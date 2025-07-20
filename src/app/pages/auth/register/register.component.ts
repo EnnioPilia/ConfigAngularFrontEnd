@@ -24,6 +24,8 @@ export class RegisterComponent {
   registerForm: FormGroup;
   loading = false;
   errorMessage: string | null = null;
+  successMessage: string | null = null;  // <-- ajoute cette ligne
+
 
   constructor(
     private fb: FormBuilder,
@@ -65,17 +67,17 @@ export class RegisterComponent {
     this.errorMessage = null;
 
     const registerData: RegisterRequest = {
-      name: '',  // Tu peux étendre le formGroup et récupérer un vrai nom ici si besoin
+      name: '',
       email: this.emailControl.value,
       password: this.passwordControl.value,
-      // age, role si tu veux les ajouter dans le formulaire
+
     };
 
     this.authService.register(registerData).subscribe({
-      next: () => {
+      next: (res: any) => {
         this.loading = false;
-        // Après inscription, rediriger vers login (ou afficher message)
-        this.router.navigate(['/login']);
+        this.successMessage = res?.text || 'Un lien vous a été envoyé sur votre boite mail pour valider votre compte';
+        console.log("✅ Mail de reset envoyé :", res);
       },
       error: (err) => {
         this.loading = false;
@@ -83,4 +85,9 @@ export class RegisterComponent {
       }
     });
   }
+  goToHome(): void {
+    this.router.navigate(['/home']);
+  }
 }
+
+

@@ -9,7 +9,8 @@ import { HomeComponent } from './pages/home/home/home.component';
 // import { authGuard } from './core/guards/auth.guard'; et ca dan le path  "  canActivate: [authGuard]  "
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // par exemple
+  { path: '', component: HomeComponent }, 
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify', component: VerifyComponent },
