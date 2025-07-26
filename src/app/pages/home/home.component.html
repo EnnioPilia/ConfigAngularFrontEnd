@@ -3,11 +3,15 @@
 
   <app-shared-button
     label="Inscription"
+    [type]="'button'"
+    [disabled]="false"
     (click)="navigateTo('register')"
   ></app-shared-button>
 
   <app-shared-button
     label="Connexion"
+    [type]="'button'"
+    [disabled]="false"
     (click)="navigateTo('login')"
   ></app-shared-button>
 </div>

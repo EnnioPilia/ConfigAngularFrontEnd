@@ -13,6 +13,5 @@ export class SharedButtonComponent {
   @Input() disabled: boolean = false;
   @Input() type: 'button' | 'submit' = 'button';
   @Input() loading: boolean = false;
-    @Input() invalid: boolean = false;  // <-- ajoute cette ligne
-
+  @Input() invalid: boolean = false;
 }

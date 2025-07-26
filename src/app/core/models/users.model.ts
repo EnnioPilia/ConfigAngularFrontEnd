@@ -3,10 +3,10 @@ export interface Users {
   nom: string;
   prenom: string;
   email: string;
-  role: string;        // ex: 'USER', 'ADMIN'
-  enabled: boolean;
+  role: string;       
+  enabled: boolean; //changer en bloquer (corriger le back aussi)
   age?: number;
-  dateCreation: string;    // ISO date string
+  dateCreation: string;   
   dateAcceptationCGU?: string;
   verifiedAt?: string;
   actif: boolean;

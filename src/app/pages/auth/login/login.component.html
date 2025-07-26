@@ -1,4 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <h1>Se connecter</h1>
 
   <app-shared-input
     label="Email"
@@ -20,18 +21,23 @@
     type="submit"
     [disabled]="loading"
     [loading]="loading"
-     label="Se connecter">
+    label="Se connecter">
   </app-shared-button>
 
   <div *ngIf="errorMessage" class="error">
     {{ errorMessage }}
   </div>
-    <div class="forgot-password">
-    <a [routerLink]="['/forgot-password']">Mot de passe oublié ?</a>
-  </div>
+
     <app-shared-button
     type="button"
-    label="Retour à l'accueil"
-    (click)="goToHome()"
+    label="Mot de passe oublié ?"
+    (click)="navigateTo('forgot-password')"
+  ></app-shared-button>
+
+  <app-shared-button
+    label="Pas encore de compte?"
+    [type]="'button'"
+    [disabled]="false"
+    (click)="navigateTo('register')"
   ></app-shared-button>
 </form>

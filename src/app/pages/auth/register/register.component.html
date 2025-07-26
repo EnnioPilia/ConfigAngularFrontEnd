@@ -1,4 +1,29 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <h1>Inscription</h1>
+
+<app-shared-input
+  label="Nom"
+  type="text"
+  [formControl]="nomControl"
+  [invalid]="nomControl.invalid && nomControl.touched"
+  errorMessage="Nom requis"
+></app-shared-input>
+
+<app-shared-input
+  label="Prénom"
+  type="text"
+  [formControl]="prenomControl"
+  [invalid]="prenomControl.invalid && prenomControl.touched"
+  errorMessage="Prénom requis"
+></app-shared-input>
+
+<app-shared-input
+  label="Âge"
+  type="number"
+  [formControl]="ageControl"
+  [invalid]="ageControl.invalid && ageControl.touched"
+  errorMessage="Âge invalide"
+></app-shared-input>
 
   <app-shared-input
     label="Email"
@@ -34,12 +59,16 @@
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
 
-  <div class="login-link">
-    <a [routerLink]="['/login']">Se connecter</a>
-  </div>
     <app-shared-button
     type="button"
     label="Retour à l'accueil"
-    (click)="goToHome()"
+    (click)="navigateTo('home')"
   ></app-shared-button>
+
+    <app-shared-button
+    type="button"
+    label="Se connecter"
+    (click)="navigateTo('login')"
+  ></app-shared-button>
+
 </form>

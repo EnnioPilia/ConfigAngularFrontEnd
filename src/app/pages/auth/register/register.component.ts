@@ -33,6 +33,9 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.registerForm = this.fb.group({
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      age: [, [Validators.min(0)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
@@ -50,6 +53,18 @@ export class RegisterComponent {
   get confirmPasswordControl(): FormControl {
     return this.registerForm.get('confirmPassword') as FormControl;
   }
+  get nomControl(): FormControl {
+    return this.registerForm.get('nom') as FormControl;
+  }
+
+  get prenomControl(): FormControl {
+    return this.registerForm.get('prenom') as FormControl;
+  }
+
+  get ageControl(): FormControl {
+    return this.registerForm.get('age') as FormControl;
+  }
+
 
   passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
@@ -67,11 +82,12 @@ export class RegisterComponent {
     this.errorMessage = null;
 
     const registerData: RegisterRequest = {
-      name: '',
+      name: `${this.prenomControl.value} ${this.nomControl.value}`,
       email: this.emailControl.value,
       password: this.passwordControl.value,
-
+      age: this.ageControl.value,
     };
+
 
     this.authService.register(registerData).subscribe({
       next: (res: any) => {
@@ -85,8 +101,9 @@ export class RegisterComponent {
       }
     });
   }
-  goToHome(): void {
-    this.router.navigate(['/home']);
+
+  navigateTo(path: string) {
+    this.router.navigate([`/${path}`]);
   }
 }
 

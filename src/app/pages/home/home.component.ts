@@ -16,7 +16,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   navigateTo(path: string) {
     this.router.navigate([`/${path}`]);
