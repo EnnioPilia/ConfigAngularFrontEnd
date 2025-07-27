@@ -1,5 +1,7 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <h1>Inscription</h1>
+  <app-shared-title 
+    level="h3">
+  </app-shared-title>
 
 <app-shared-input
   label="Nom"
@@ -56,16 +58,14 @@
     label="Créer un compte"
   ></app-shared-button>
   
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+  <app-toast
+    *ngIf="toastVisible"
+    [message]="toastMessage"
+    [type]="toastType"
+    (click)="toastVisible = false"
+  />
 
-    <app-shared-button
-    type="button"
-    label="Retour à l'accueil"
-    (click)="navigateTo('home')"
-  ></app-shared-button>
-
-    <app-shared-button
+  <app-shared-button
     type="button"
     label="Se connecter"
     (click)="navigateTo('login')"

@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule,FormControl  } from '@angular/forms';
 import { SharedInputComponent } from '../../shared/components/shared-input/shared-input.component';
 import { SharedButtonComponent } from '../../shared/components/shared-button/shared-button.component';
+import { SharedTitleComponent } from '../../shared/components/shared-title/shared-title.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, SharedInputComponent, SharedButtonComponent],
+  imports: [CommonModule, ReactiveFormsModule, SharedInputComponent, SharedButtonComponent,SharedTitleComponent],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })

@@ -1,5 +1,12 @@
-<div class="home-container">
-  <h1>Bienvenue</h1>
+
+<!-- Rien ne s'affiche dans 'app-shared-title' (mettre la valeur dans le html de 'shared-title' pour que ca fonctionne) -->
+  <app-shared-title 
+    level="h1">
+  </app-shared-title>
+
+  <app-shared-text size="base">
+    Bienvenue sur mon application
+  </app-shared-text>
 
   <app-shared-button
     label="Inscription"
@@ -14,4 +21,3 @@
     [disabled]="false"
     (click)="navigateTo('login')"
   ></app-shared-button>
-</div>

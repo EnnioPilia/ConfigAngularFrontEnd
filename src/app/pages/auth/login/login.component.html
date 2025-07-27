@@ -1,5 +1,7 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <h1>Se connecter</h1>
+  <app-shared-title 
+    level="h2">
+  </app-shared-title>
 
   <app-shared-input
     label="Email"
@@ -24,9 +26,12 @@
     label="Se connecter">
   </app-shared-button>
 
-  <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
+  <!-- Ajouter les bonne alert : mot de passe incorrect ect -->
+  <app-alert
+    *ngIf="alertVisible"
+    [message]="alertMessage!"
+    [type]="alertType"
+  ></app-alert>
 
     <app-shared-button
     type="button"

@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService, RegisterRequest } from '../../../core/services/auth/auth.service';
 import { SharedInputComponent } from '../../../shared/components/shared-input/shared-input.component';
 import { SharedButtonComponent } from '../../../shared/components/shared-button/shared-button.component';
+import { SharedTitleComponent } from '../../../shared/components/shared-title/shared-title.component';
+import { ToastComponent } from '../../../shared/components/toast/toast.component';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -15,7 +17,9 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     SharedInputComponent,
     SharedButtonComponent,
-    RouterModule
+    RouterModule,
+    SharedTitleComponent,
+    ToastComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
@@ -25,6 +29,9 @@ export class RegisterComponent {
   loading = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;  // <-- ajoute cette ligne
+  toastVisible = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' | 'info' | 'warning' = 'info';
 
 
   constructor(
@@ -88,12 +95,13 @@ export class RegisterComponent {
       age: this.ageControl.value,
     };
 
-
     this.authService.register(registerData).subscribe({
       next: (res: any) => {
         this.loading = false;
-        this.successMessage = res?.text || 'Un lien vous a été envoyé sur votre boite mail pour valider votre compte';
-        console.log("✅ Mail de reset envoyé :", res);
+        const message = res?.text || 'Un lien vous a été envoyé sur votre boîte mail pour valider votre compte';
+
+        this.showToast(message, 'success');  // ✅ Toast succès uniquement
+        this.registerForm.reset();
       },
       error: (err) => {
         this.loading = false;
@@ -102,6 +110,16 @@ export class RegisterComponent {
     });
   }
 
+  showToast(message: string, type: 'success' | 'error' | 'info' | 'warning') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.toastVisible = true;
+
+    setTimeout(() => {
+      this.toastVisible = false;
+    }, 5000);
+  }
+  
   navigateTo(path: string) {
     this.router.navigate([`/${path}`]);
   }
