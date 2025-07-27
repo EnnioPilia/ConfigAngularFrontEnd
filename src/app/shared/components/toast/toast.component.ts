@@ -2,13 +2,13 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-alert',
+  selector: 'app-toast',
   standalone: true,
-  templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss'],
   imports: [CommonModule],
+  templateUrl: './toast.component.html',
+  styleUrls: ['./toast.component.scss'],
 })
-export class AlertComponent {
+export class ToastComponent {
   @Input() message!: string;
   @Input() type: 'success' | 'error' | 'info' | 'warning' = 'info';
 }

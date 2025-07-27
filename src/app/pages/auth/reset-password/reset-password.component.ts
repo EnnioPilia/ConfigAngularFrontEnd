@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { AuthService } from '../../../core/services/auth/auth.service'; // adapte le chemin
+import { AuthService } from '../../../core/services/auth/auth.service';
 import { SharedInputComponent } from '../../../shared/components/shared-input/shared-input.component';
 import { SharedButtonComponent } from '../../../shared/components/shared-button/shared-button.component';
+import { ToastComponent } from '../../../shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-reset-password',
@@ -14,7 +15,8 @@ import { SharedButtonComponent } from '../../../shared/components/shared-button/
     CommonModule,
     ReactiveFormsModule,
     SharedInputComponent,
-    SharedButtonComponent
+    SharedButtonComponent,
+    ToastComponent
   ],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
@@ -23,8 +25,11 @@ export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;
   token: string = '';
   loading = false;
-  errorMessage: string | null = null;
-  successMessage: string | null = null;
+
+  // Variables toast
+  toastVisible = false;
+  toastMessage = '';
+  toastType: 'success' | 'error' | 'info' | 'warning' = 'info';
 
   constructor(
     private fb: FormBuilder,
@@ -42,39 +47,45 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Récupérer le token depuis l'URL
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
-
     if (!this.token) {
-      this.errorMessage = "Token de réinitialisation manquant dans l'URL.";
+      this.showToast("Token de réinitialisation manquant dans l'URL.", 'error');
     }
+  }
+
+  showToast(message: string, type: 'success' | 'error' | 'info' | 'warning') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.toastVisible = true;
+
+    setTimeout(() => this.toastVisible = false, 5000);
   }
 
   onSubmit(): void {
-  if (this.resetForm.invalid || !this.token) {
-    this.resetForm.markAllAsTouched();
-    if (!this.token) {
-      this.errorMessage = "Token invalide ou manquant.";
+    if (this.resetForm.invalid || !this.token) {
+      this.resetForm.markAllAsTouched();
+      if (!this.token) {
+        this.showToast("Token invalide ou manquant.", 'error');
+      }
+      return;
     }
-    return;
-  }
 
-  this.loading = true;
-  this.errorMessage = null;
-  this.successMessage = null;
+    this.loading = true;
 
- this.authService.resetPassword({
-  token: this.token,
-  newPassword: this.passwordControl.value
-}).subscribe({
-  next: (res: any) => {
-    this.loading = false;
-    this.successMessage = res?.text || "Mot de passe réinitialisé avec succès.";
-  },
-  error: (err: any) => {
-    this.loading = false;
-    this.errorMessage = err?.error?.text || "Erreur lors de la réinitialisation.";
+    this.authService.resetPassword({
+      token: this.token,
+      newPassword: this.passwordControl.value
+    }).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        this.showToast(res?.text || "Mot de passe réinitialisé avec succès.", 'success');
+      },
+      error: (err: any) => {
+        console.log('Erreur reçue:', err);
+        this.loading = false;
+        const msg = err?.error?.text || err?.message || "Erreur lors de la réinitialisation.";
+        this.showToast(msg, 'error');
+      }
+    });
   }
-});
-}
 }
