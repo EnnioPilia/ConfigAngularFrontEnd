@@ -73,4 +73,12 @@ export class AuthService {
       })
     );
   }
+  
+  refreshToken(): Observable<{ accessToken: string }> {
+    return this.http.post<{ accessToken: string }>(
+      `${this.baseUrl}/refresh-token`,
+      {},
+      { withCredentials: true } 
+    );
+  }
 }
