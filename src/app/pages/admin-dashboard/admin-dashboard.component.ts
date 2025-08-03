@@ -46,15 +46,16 @@ loadUsers(): void {
   });
 }
 
-  deleteUser(userId: number) {
-    this.userService.deleteUser(userId).subscribe({
-      next: () => {
-        this.users = this.users.filter(u => u.id !== userId);
-      },
-      error: (err) => {
-        console.error('Erreur suppression', err);
-      }
-    });
-  }
+deleteUser(userId: number) {
+  console.log('Suppression user id:', userId);
+  this.userService.deleteUser(userId).subscribe({
+    next: () => {
+      this.users = this.users.filter(u => u.id !== userId);
+    },
+    error: (err) => {
+      console.error('Erreur suppression', err);
+    }
+  });
+}
 
 }
