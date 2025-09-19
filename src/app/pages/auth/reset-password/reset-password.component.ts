@@ -26,7 +26,6 @@ export class ResetPasswordComponent implements OnInit {
   token: string = '';
   loading = false;
 
-  // Variables toast
   toastVisible = false;
   toastMessage = '';
   toastType: 'success' | 'error' | 'info' | 'warning' = 'info';
@@ -47,9 +46,12 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.token = this.route.snapshot.queryParamMap.get('token') || '';
-    if (!this.token) {
+    // Récupération uniquement du token UUID depuis l'URL
+    const tokenParam = this.route.snapshot.queryParamMap.get('token');
+    if (!tokenParam) {
       this.showToast("Token de réinitialisation manquant dans l'URL.", 'error');
+    } else {
+      this.token = tokenParam;
     }
   }
 
@@ -57,33 +59,30 @@ export class ResetPasswordComponent implements OnInit {
     this.toastMessage = message;
     this.toastType = type;
     this.toastVisible = true;
-
     setTimeout(() => this.toastVisible = false, 5000);
   }
 
   onSubmit(): void {
     if (this.resetForm.invalid || !this.token) {
       this.resetForm.markAllAsTouched();
-      if (!this.token) {
-        this.showToast("Token invalide ou manquant.", 'error');
-      }
+      if (!this.token) this.showToast("Token invalide ou manquant.", 'error');
       return;
     }
 
     this.loading = true;
 
     this.authService.resetPassword({
-      token: this.token,
+      token: this.token,             // uniquement UUID
       newPassword: this.passwordControl.value
     }).subscribe({
       next: (res: any) => {
         this.loading = false;
-        this.showToast(res?.text || "Mot de passe réinitialisé avec succès.", 'success');
+        this.showToast(res || "Mot de passe réinitialisé avec succès.", 'success');
+        this.router.navigate(['/login']); // redirection après succès
       },
       error: (err: any) => {
-        console.log('Erreur reçue:', err);
         this.loading = false;
-        const msg = err?.error?.text || err?.message || "Erreur lors de la réinitialisation.";
+        const msg = err?.error || err?.message || "Erreur lors de la réinitialisation.";
         this.showToast(msg, 'error');
       }
     });
